@@ -1,20 +1,20 @@
-# Fresh Admin Dashboard (Flutter Web)
+# Fresh Admin Web (Flutter)
 
-Minimal Flutter **web** dashboard scaffold (no third‑party packages).
+**Login:** `admin@fresh.dev` / `123456`
 
-**Includes**: Login (mock/localStorage), Dashboard, Sidebar (NavigationRail/Drawer), Reports, Settings, and GitHub Pages CI.
-
-## Run
+## Local run
 ```bash
+cd apps/admin_web
+flutter pub get
 flutter run -d chrome
 ```
 
-## Build
+## Build web
 ```bash
-flutter build web
+cd apps/admin_web
+flutter build web --release --base-href "/fresh-svc3/"
 ```
 
-## Deploy to GitHub Pages
-1. Enable **Settings → Pages → Source = GitHub Actions**.
-2. Keep `.github/workflows/web-only.yml` as-is.
-3. Push to `main` and wait for the action to finish.
+## Deploy on GitHub
+- Keep the workflow at `.github/workflows/web-only.yml`
+- In repo **Settings → Pages**, set **Source = GitHub Actions**.
