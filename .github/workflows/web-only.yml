@@ -1,0 +1,34 @@
+name: build-and-deploy-web-only
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '3.22.0'
+      - run: flutter config --enable-web
+      - name: Build Admin Web
+        run: |
+          cd apps/admin_web
+          flutter pub get
+          flutter build web --release
+      - name: Upload web artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/admin_web/build/web
+
+  deploy:
+    needs: build-web
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/deploy-pages@v4
