@@ -1,0 +1,1 @@
+import 'package:flutter/material.dart'; import 'package:go_router/go_router.dart'; import 'pages/login.dart'; import 'pages/dashboard.dart'; GoRouter buildRouter()=>GoRouter(initialLocation:'/login',routes:[GoRoute(path:'/login',builder:(_,__)=>const LoginPage()),GoRoute(path:'/',builder:(_,__)=>const DashboardPage())]);

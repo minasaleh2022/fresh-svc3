@@ -1,0 +1,1 @@
+import 'package:flutter/material.dart'; class DashboardPage extends StatelessWidget{const DashboardPage({super.key}); @override Widget build(BuildContext c){return Scaffold(appBar:AppBar(title:const Text('Dashboard')),body:const Center(child:Text('Fresh Admin Web ✅')));}}

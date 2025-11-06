@@ -1,0 +1,1 @@
+class Ticket{final String id; Ticket(this.id);}
