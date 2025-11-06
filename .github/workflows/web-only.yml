@@ -1,4 +1,5 @@
 name: build-and-deploy-web-only
+
 on:
   push:
     branches: [ main ]
@@ -9,16 +10,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version: '3.24.4'   # النسخة المحدثة
-      - run: flutter config --enable-web
-      - name: Build Admin Web
+          flutter-version: '3.24.4'
+
+      - name: Enable Flutter web
+        run: flutter config --enable-web
+
+      - name: Build web release
         run: |
           cd apps/admin_web
           flutter pub get
-          flutter build web --release
+          flutter build web --release --base-href "/fresh-svc3/"
+          cp build/web/index.html build/web/404.html
+
       - name: Upload web artifact
         uses: actions/upload-pages-artifact@v3
         with:
