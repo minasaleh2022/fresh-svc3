@@ -5,42 +5,53 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   build-web:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: subosito/flutter-action@v2
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version: '3.24.4'
+          flutter-version: "3.24.4"
 
-      - name: Enable Flutter web
+      - name: Enable web
         run: flutter config --enable-web
 
-      - - name: Build web release
-  run: |
-    cd apps/admin_web
-    flutter pub get
-    flutter build web --release --base-href "/fresh-svc3/"
-    cp build/web/index.html build/web/404.html
+      # نبني من مجلد app مباشرة بدون cd باستخدام working-directory
+      - name: Build web
+        working-directory: apps/admin_web
+        run: |
+          flutter pub get
+          flutter build web --release --base-href "/fresh-svc3/"
+          cp build/web/index.html build/web/404.html
 
-
-      - name: Upload web artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: apps/admin_web/build/web
 
   deploy:
     needs: build-web
-    permissions:
-      pages: write
-      id-token: write
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
