@@ -19,12 +19,13 @@ jobs:
       - name: Enable Flutter web
         run: flutter config --enable-web
 
-      - name: Build web release
-        run: |
-          cd apps/admin_web
-          flutter pub get
-          flutter build web --release --base-href "/fresh-svc3/"
-          cp build/web/index.html build/web/404.html
+      - - name: Build web release
+  run: |
+    cd apps/admin_web
+    flutter pub get
+    flutter build web --release --base-href "/fresh-svc3/"
+    cp build/web/index.html build/web/404.html
+
 
       - name: Upload web artifact
         uses: actions/upload-pages-artifact@v3
