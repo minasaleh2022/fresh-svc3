@@ -1,5 +1,4 @@
-name: fresh_admin_dashboard
-description: Minimal Flutter Web Admin Dashboard skeleton (Login + Dashboard + Sidebar + Reports + Settings)
+name: fresh_admin_web
 publish_to: "none"
 
 environment:
@@ -8,10 +7,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  go_router: ^14.1.4
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/logo_fresh.webp
